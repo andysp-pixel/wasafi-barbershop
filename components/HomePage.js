@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import BookingModal from "./BookingModal";
 
-const BOOKING_URL = "https://wasafibarbershop.setmore.com/book";
-const SETMORE_URL = "https://wasafibarbershop.setmore.com/";
 const INSTAGRAM_URL = "https://www.instagram.com/wasafibarbershopp";
 const FACEBOOK_URL = "https://www.facebook.com/people/Wasafibarbershop/61580143397754/";
 const MAP_URL =
@@ -11,28 +10,27 @@ const MAP_URL =
 const MAP_EMBED =
   "https://www.google.com/maps?q=274%20Montreal%20Rd%20Vanier%20Ottawa%20Ontario%20K1L%206C3&output=embed";
 
-const LOGO_URL =
-  "https://avatar.setmore.com/files/img/fD2B2lLHxyi2/7e71fc49-144c-46e5-a995-bab9036b2487.jpeg?crop=962%3B962%3B95%3B440&h=128&w=128";
+const LOGO_URL = "/api/media/logo";
 
 const GALLERY = [
   {
-    src: "https://images.setmore.com/files/img/fm3Zmp1aQdEI/3bf120f1-b6e2-4b84-9fb0-8ab9c04e5d40.jpeg",
+    src: "/api/media/cut-1",
     alt: "Sharp line-up and wave haircut by Wasafi Barbershop",
   },
   {
-    src: "https://images.setmore.com/files/img/fY5fFf9aJhaY/f17bed77-f6b0-4a38-abd1-20bb1f5642c2.webp",
+    src: "/api/media/cut-2",
     alt: "Kids haircut at Wasafi Barbershop",
   },
   {
-    src: "https://images.setmore.com/files/img/fOMRSvX0KkwS/22fc9d70-ba51-4011-a7fa-03f98c896221.png",
+    src: "/api/media/cut-3",
     alt: "Clean kids haircut from Wasafi Barbershop",
   },
   {
-    src: "https://images.setmore.com/files/img/fdiUQFV87ON0/f4e25b00-8195-4f40-b0e6-303f5112ff96.jpeg",
+    src: "/api/media/cut-4",
     alt: "Fresh wave haircut and line-up",
   },
   {
-    src: "https://images.setmore.com/files/img/fyWBVZQTeBij/c7f03d29-3eca-4724-b74c-401301b8ddf6.jpeg",
+    src: "/api/media/cut-5",
     alt: "Fade and beard grooming from Wasafi Barbershop",
   },
 ];
@@ -67,17 +65,17 @@ const REVIEWS = [
     name: "Romane Bernagene",
     quote:
       "Great place to get service. Very friendly environment, very professional. Highly recommended.",
-    source: "Setmore",
+    source: "Customer",
   },
   {
     name: "Isidore Kamdem Domasang",
     quote: "Class hair cut. Would recommend any day.",
-    source: "Setmore",
+    source: "Customer",
   },
   {
     name: "Henry",
     quote: "Excellent barber. I recommend him to anyone.",
-    source: "Setmore",
+    source: "Customer",
   },
   {
     name: "B Ntambi",
@@ -158,6 +156,8 @@ export default function HomePage() {
   useReveal();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeReview, setActiveReview] = useState(0);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingService, setBookingService] = useState("");
 
   const isOpen = useMemo(() => {
     try {
@@ -181,6 +181,11 @@ export default function HomePage() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const openBooking = (service = "") => {
+    setBookingService(service);
+    setBookingOpen(true);
+    setMenuOpen(false);
+  };
 
   return (
     <main>
@@ -208,9 +213,9 @@ export default function HomePage() {
             <Icon name="phone" size={18} />
             <span>613-318-8858</span>
           </a>
-          <a className="btn btn-primary btn-small" href={BOOKING_URL} target="_blank" rel="noreferrer">
+          <button className="btn btn-primary btn-small" type="button" onClick={() => openBooking()}>
             Book now
-          </a>
+          </button>
           <button
             className="menu-button"
             type="button"
@@ -249,9 +254,9 @@ export default function HomePage() {
               Afro-Caribbean inspired barbering, precise line-ups, beard grooming and custom styles in Ottawa — for kids and adults.
             </p>
             <div className="hero-actions fade-up delay-4">
-              <a className="btn btn-primary" href={BOOKING_URL} target="_blank" rel="noreferrer">
+              <button className="btn btn-primary" type="button" onClick={() => openBooking()}>
                 Book appointment <Icon name="arrow" size={18} />
-              </a>
+              </button>
               <a className="btn btn-ghost" href="tel:+16133188858">
                 <Icon name="phone" size={18} /> Call us
               </a>
@@ -260,7 +265,7 @@ export default function HomePage() {
               <div>
                 <strong>5.0</strong>
                 <span className="stars" aria-label="5 out of 5 stars">★★★★★</span>
-                <small>55 Setmore reviews</small>
+                <small>55 customer reviews</small>
               </div>
               <span className="proof-divider" />
               <div>
@@ -313,7 +318,7 @@ export default function HomePage() {
           <SectionTitle
             eyebrow="Services"
             title="Choose your cut. Leave sharp."
-            copy="Every listed service from the Wasafi booking page is here, with the same duration and price."
+            copy="Choose your service, preferred date and time without leaving the Wasafi website."
           />
           <div className="service-grid">
             {SERVICES.map((service, index) => (
@@ -329,9 +334,9 @@ export default function HomePage() {
                   </div>
                   <strong className="price">{service.price}</strong>
                 </div>
-                <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="service-book">
+                <button type="button" className="service-book" onClick={() => openBooking(service.name)}>
                   Book this service <Icon name="arrow" size={17} />
-                </a>
+                </button>
               </article>
             ))}
           </div>
@@ -386,7 +391,7 @@ export default function HomePage() {
           <SectionTitle
             eyebrow="Gallery"
             title="The finish speaks for itself."
-            copy="Real work featured on the Wasafi Setmore gallery."
+            copy="Real work from Wasafi Barbershop."
             align="center"
           />
           <div className="gallery-grid">
@@ -406,8 +411,8 @@ export default function HomePage() {
             <span className="eyebrow">Reviews</span>
             <strong className="big-score">5.0</strong>
             <div className="large-stars">★★★★★</div>
-            <p>55 reviews on the current Setmore booking page.</p>
-            <div className="rating-bars" aria-label="Setmore rating distribution">
+            <p>55 customer reviews.</p>
+            <div className="rating-bars" aria-label="Customer rating distribution">
               <div><span>5</span><i><b style={{ width: "94.5%" }} /></i><strong>52</strong></div>
               <div><span>4</span><i><b style={{ width: "5.5%" }} /></i><strong>3</strong></div>
               <div><span>3</span><i><b style={{ width: "0%" }} /></i><strong>0</strong></div>
@@ -463,7 +468,7 @@ export default function HomePage() {
                 <div><span>Hours</span><strong>Open daily · 10AM — 10PM</strong><small>Eastern Time</small></div>
               </div>
               <div className="contact-buttons">
-                <a className="btn btn-primary" href={BOOKING_URL} target="_blank" rel="noreferrer">Book with Setmore <Icon name="arrow" size={18} /></a>
+                <button className="btn btn-primary" type="button" onClick={() => openBooking()}>Book appointment <Icon name="arrow" size={18} /></button>
                 <a className="btn btn-dark-outline" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
               </div>
             </div>
@@ -500,7 +505,7 @@ export default function HomePage() {
           <h2>Ready for a fresh cut?</h2>
           <p>Book your chair online or walk in. We’ll take care of the rest.</p>
           <div>
-            <a className="btn btn-primary" href={BOOKING_URL} target="_blank" rel="noreferrer">Book now <Icon name="arrow" size={18} /></a>
+            <button className="btn btn-primary" type="button" onClick={() => openBooking()}>Book now <Icon name="arrow" size={18} /></button>
             <a className="btn btn-white-outline" href="tel:+16133188858">613-318-8858</a>
           </div>
         </div>
@@ -517,10 +522,17 @@ export default function HomePage() {
           </div>
           <div><strong>Explore</strong><a href="#services">Services</a><a href="#about">About</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a></div>
           <div><strong>Contact</strong><a href="tel:+16133188858">+1 613-318-8858</a><a href="mailto:wasafibarbershop2025@gmail.com">Email us</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">@wasafibarbershopp</a><a href={FACEBOOK_URL} target="_blank" rel="noreferrer">Facebook</a></div>
-          <div><strong>Booking</strong><a href={BOOKING_URL} target="_blank" rel="noreferrer">Book appointment</a><a href={SETMORE_URL} target="_blank" rel="noreferrer">Setmore profile</a><span>Walk-ins welcome</span></div>
+          <div><strong>Booking</strong><button className="footer-book" type="button" onClick={() => openBooking()}>Book appointment</button><span>WhatsApp · Email · PDF</span><span>Walk-ins welcome</span></div>
         </div>
         <div className="container footer-bottom"><span>© {new Date().getFullYear()} Wasafi Barbershop. All rights reserved.</span><span>Ottawa, Ontario · Canada</span></div>
       </footer>
+
+      <BookingModal
+        open={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        services={SERVICES}
+        initialService={bookingService}
+      />
     </main>
   );
 }
