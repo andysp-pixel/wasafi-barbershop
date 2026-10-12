@@ -463,3 +463,67 @@ select { font: inherit; }
   .booking-summary { padding: 20px; }
   .booking-actions { grid-template-columns: 1fr; }
 }
+
+/* Barber selection and individual booking pages */
+#barbers, #hairstyles { scroll-margin-top: 110px; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+.shop-banner-section { padding: 32px 0 0; background: var(--paper); }
+.shop-banner-art { position: relative; width: min(100%, 1000px); margin: 0 auto; aspect-ratio: 1312 / 500; overflow: hidden; border-radius: 16px; box-shadow: 0 12px 35px #00000012; }
+.shop-banner-art img { position: absolute; width: 100%; max-width: none; transform: translateY(-40.85%); }
+.barber-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.barber-card { display: grid; grid-template-columns: 44% 1fr; overflow: hidden; background: white; border: 1px solid var(--line); border-radius: 24px; }
+.barber-photo { position: relative; min-height: 380px; overflow: hidden; background: var(--ink); }
+.barber-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 46%; transition: transform .4s ease; }
+.fabrice .barber-photo img { object-position: 72% 64%; }
+.barber-photo:hover img { transform: scale(1.035); }
+.barber-photo-label { position: absolute; left: 18px; bottom: 18px; color: white; font-size: 9px; letter-spacing: .12em; background: #0009; padding: 8px 10px; border-radius: 20px; }
+.barber-card-body { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 26px; min-width: 0; }
+.barber-card h3 { font-size: 34px; margin: 12px 0 18px; letter-spacing: -.04em; }
+.barber-contact { font-size: 12px; color: var(--muted-dark); overflow-wrap: anywhere; margin: 0 0 8px; }
+.barber-card .btn { margin-top: 18px; padding-inline: 18px; }
+.barber-call { display: flex; align-items: center; gap: 7px; font-size: 12px; margin-top: 16px; font-weight: 700; }
+.barber-intro { padding: 150px 0 65px; color: white; background: radial-gradient(ellipse at top left, #172644, #090909 65%); }
+.barber-intro-grid { display: grid; grid-template-columns: 1fr 340px; align-items: center; gap: 60px; }
+.barber-intro h1 { font-size: clamp(50px, 7vw, 88px); letter-spacing: -.06em; line-height: 1; margin: 22px 0; }
+.barber-intro h1 span { display: block; font-size: .4em; color: #b9b5ae; letter-spacing: -.025em; margin-top: 20px; }
+.barber-intro p { max-width: 590px; color: #ccc; line-height: 1.75; }
+.barber-intro-photo { width: 100%; height: 390px; object-fit: cover; object-position: 50% 48%; border-radius: 24px; }
+.fabrice .barber-intro-photo { object-position: 70% 68%; }
+.barber-intro-links { display: flex; flex-wrap: wrap; gap: 12px 25px; margin: 22px 0; font-size: 14px; overflow-wrap: anywhere; }
+.barber-intro small { color: #aaa; line-height: 1.7; }
+.booking-steps { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 11px; color: #aaa; margin-bottom: 30px; }
+.booking-steps strong { color: white; }
+.back-link { font-size: 13px; font-weight: 700; }
+.barber-phone-booking { text-align: center; margin-top: 48px; padding: 36px 20px; background: var(--paper-2); border-radius: 20px; }
+.barber-phone-booking h3 { font-size: 26px; margin: 0; }
+.barber-phone-booking p { color: var(--muted-dark); }
+.appointment-dialog { position: fixed; inset: 0; border: 0; background: transparent; padding: 0; width: min(1080px, calc(100vw - 24px)); max-width: none; max-height: calc(100dvh - 24px); color: white; overflow-y: auto; border-radius: 28px; }
+.appointment-dialog::backdrop { background: rgba(0,0,0,.78); backdrop-filter: blur(6px); }
+.appointment-dialog .booking-shell { width: 100%; max-height: none; overflow: visible; }
+.booking-fields { border: 0; margin: 0; padding: 0; min-width: 0; align-content: start; }
+.booking-time-note { margin: -3px 0 0; font-size: 12px; line-height: 1.5; color: #bbb; }
+.booking-honey { display: none !important; }
+.summary-barber { display: flex; align-items: center; gap: 12px; }
+.summary-barber img { width: 54px; height: 54px; object-fit: cover; object-position: center 48%; border-radius: 50%; }
+.summary-barber div { display: flex; flex-direction: column; gap: 4px; }
+.summary-barber span { color: var(--muted-dark); font-size: 11px; }
+.summary-phone { font-size: 12px; line-height: 1.8; }
+.change-style { border: 0; background: none; color: var(--blue); padding: 10px 0 0; text-decoration: underline; font-size: 12px; cursor: pointer; }
+.direct-booking-actions { padding: 0 36px 30px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.direct-booking-actions small { flex-basis: 100%; color: #aaa; font-size: 11px; line-height: 1.5; }
+.email-fallback { border: 0; background: transparent; color: #ccc; text-decoration: underline; cursor: pointer; font-size: 12px; padding: 12px; }
+button:disabled { opacity: .6; cursor: wait; }
+.booking-success { padding: 20px 40px 48px; text-align: center; max-width: 680px; margin: 0 auto; }
+.success-check { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; background: #1f7042; align-items: center; justify-content: center; font-size: 30px; }
+.booking-success h3 { font-size: 34px; margin: 18px 0; }
+.booking-success p { color: #ccc; line-height: 1.8; }
+.booking-success a { display: block; margin-bottom: 25px; }
+@media (max-width: 1050px) { .barber-card { grid-template-columns: 1fr; } .barber-photo { height: 350px; min-height: 0; } .barber-card-body { padding: 26px; } }
+@media (max-width: 760px) { .barber-intro-grid { grid-template-columns: 1fr 220px; gap: 24px; } .barber-intro-photo { height: 300px; } .barber-header { grid-template-columns: 1fr auto; } .barber-header .back-link { grid-row: 2; font-size: 12px; } .barber-header .btn { font-size: 11px; } .direct-booking-actions { padding: 0 22px 24px; } }
+@media (max-width: 560px) { .barber-grid { grid-template-columns: 1fr; gap: 22px; } .barber-photo { height: 380px; } .barber-intro { padding-top: 160px; } .barber-intro-grid { grid-template-columns: 1fr; } .barber-intro-photo { height: 320px; max-width: 340px; } .barber-intro-links { flex-direction: column; } .direct-booking-actions .btn { width: 100%; } .appointment-dialog { border-radius: 20px; } .booking-success { padding: 20px 22px 34px; } }
+
+.footer-social { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.footer-social a { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 10px 14px; border: 1px solid #ffffff24; border-radius: 12px; color: #ddd; background: #ffffff05; font-size: 12px; font-weight: 700; transition: color .2s, border-color .2s, background .2s; }
+.footer-social a:hover { color: white; border-color: #ffffff60; background: #ffffff10; }
+.footer-social svg { flex: 0 0 auto; }
+.barber-footer-social { margin-bottom: 24px; }

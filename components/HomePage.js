@@ -1,54 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import BookingModal from "./BookingModal";
+import { useEffect, useState } from "react";
+import { BARBERS, GALLERY, LOGO_URL } from "@/lib/shop";
+import { sitePath } from "@/lib/paths";
 
-const INSTAGRAM_URL = "https://www.instagram.com/wasafibarbershopp";
-const FACEBOOK_URL = "https://www.facebook.com/people/Wasafibarbershop/61580143397754/";
+import FooterSocial, { INSTAGRAM_URL } from "./FooterSocial";
 const MAP_URL =
   "https://www.google.com/maps/search/?api=1&query=274+Montreal+Rd+Vanier+Ottawa+Ontario+K1L+6C3";
 const MAP_EMBED =
   "https://www.google.com/maps?q=274%20Montreal%20Rd%20Vanier%20Ottawa%20Ontario%20K1L%206C3&output=embed";
-
-const LOGO_URL = "/api/media/logo";
-
-const GALLERY = [
-  {
-    src: "/api/media/cut-1",
-    alt: "Sharp line-up and wave haircut by Wasafi Barbershop",
-  },
-  {
-    src: "/api/media/cut-2",
-    alt: "Kids haircut at Wasafi Barbershop",
-  },
-  {
-    src: "/api/media/cut-3",
-    alt: "Clean kids haircut from Wasafi Barbershop",
-  },
-  {
-    src: "/api/media/cut-4",
-    alt: "Fresh wave haircut and line-up",
-  },
-  {
-    src: "/api/media/cut-5",
-    alt: "Fade and beard grooming from Wasafi Barbershop",
-  },
-];
-
-const SERVICES = [
-  { name: "BALD SHAVED HEAD", duration: "30 mins", price: "$30", image: GALLERY[0].src },
-  { name: "KID CUT", duration: "30 mins", price: "$30", image: GALLERY[1].src },
-  { name: "KEEPING SWEET & SHORRT -WOMAN", duration: "1 hr", price: "$30", image: GALLERY[2].src },
-  { name: "LOW TAPER", duration: "30 mins", price: "$30", image: GALLERY[3].src },
-  { name: "TAPER FADE", duration: "30 mins", price: "$30", image: GALLERY[4].src },
-  { name: "REGULAR HAIRCUT", duration: "30 mins", price: "$30", image: GALLERY[0].src },
-  { name: "LOW FADE", duration: "30 mins", price: "$30", image: GALLERY[3].src },
-  { name: "MID FADE", duration: "30 mins", price: "$30", image: GALLERY[4].src },
-  { name: "HIGH FADE", duration: "30 mins", price: "$30", image: GALLERY[0].src },
-  { name: "REGULAR CUT & BEARD", duration: "30 mins", price: "$30", image: GALLERY[4].src },
-  { name: "LINE-UP ONLY", duration: "30 mins", price: "$30", image: GALLERY[3].src },
-  { name: "BEARD & LINE-UP", duration: "1 hr", price: "$30", image: GALLERY[4].src },
-];
 
 const HOURS = [
   ["Sunday", "10:00 - 22:00"],
@@ -156,21 +116,19 @@ export default function HomePage() {
   useReveal();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeReview, setActiveReview] = useState(0);
-  const [bookingOpen, setBookingOpen] = useState(false);
-  const [bookingService, setBookingService] = useState("");
 
-  const isOpen = useMemo(() => {
-    try {
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const updateStatus = () => {
       const parts = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "America/Toronto",
-        hour: "2-digit",
-        hour12: false,
+        timeZone: "America/Toronto", hour: "2-digit", hourCycle: "h23",
       }).formatToParts(new Date());
       const hour = Number(parts.find((p) => p.type === "hour")?.value ?? 0);
-      return hour >= 10 && hour < 22;
-    } catch {
-      return false;
-    }
+      setIsOpen(hour >= 10 && hour < 22);
+    };
+    updateStatus();
+    const timer = window.setInterval(updateStatus, 30000);
+    return () => window.clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -181,10 +139,9 @@ export default function HomePage() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
-  const openBooking = (service = "") => {
-    setBookingService(service);
-    setBookingOpen(true);
+  const openBooking = () => {
     setMenuOpen(false);
+    document.getElementById("barbers")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -201,7 +158,7 @@ export default function HomePage() {
         </a>
 
         <nav className={`nav ${menuOpen ? "open" : ""}`} aria-label="Primary navigation">
-          <a href="#services" onClick={closeMenu}>Services</a>
+          <a href="#barbers" onClick={closeMenu}>Our barbers</a>
           <a href="#about" onClick={closeMenu}>About</a>
           <a href="#gallery" onClick={closeMenu}>Gallery</a>
           <a href="#reviews" onClick={closeMenu}>Reviews</a>
@@ -283,13 +240,6 @@ export default function HomePage() {
                 <strong>Fresh looks start here.</strong>
               </div>
             </div>
-            <div className="hero-card-image">
-              <img src={GALLERY[4].src} alt="Fade and beard grooming" referrerPolicy="no-referrer" />
-              <div className="floating-price">
-                <span>Services from</span>
-                <strong>$30</strong>
-              </div>
-            </div>
             <div className="hero-card-meta">
               <div><Icon name="map" size={18} /><span>274 Montreal Rd, Vanier</span></div>
               <div><Icon name="clock" size={18} /><span>Daily · 10:00 — 22:00</span></div>
@@ -313,30 +263,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="services" className="section services-section">
+      <section id="barbers" className="section services-section">
         <div className="container">
-          <SectionTitle
-            eyebrow="Services"
-            title="Choose your cut. Leave sharp."
-            copy="Choose your service, preferred date and time without leaving the Wasafi website."
-          />
-          <div className="service-grid">
-            {SERVICES.map((service, index) => (
-              <article className="service-card" key={service.name} data-reveal style={{ "--delay": `${(index % 4) * 70}ms` }}>
-                <div className="service-image">
-                  <img src={service.image} alt="" referrerPolicy="no-referrer" loading="lazy" />
-                  <span className="service-number">{String(index + 1).padStart(2, "0")}</span>
+          <SectionTitle eyebrow="Your barber. Your style." title="Choose your favorite barber." copy="Pick DJ Kakou or Fabrice, explore hairstyles and prices, then request your appointment." />
+          <div className="barber-grid">
+            {BARBERS.map((barber) => (
+              <article className={`barber-card ${barber.slug}`} key={barber.slug} data-reveal>
+                <a className="barber-photo" href={sitePath(`/barbers/${barber.slug}/`)} aria-label={`Choose ${barber.name}`}>
+                  <img src={barber.image} alt={barber.name} loading="lazy" />
+                  <span className="barber-photo-label">WASAFI BARBERSHOP</span>
+                </a>
+                <div className="barber-card-body">
+                  <span className="eyebrow">Meet your barber</span><h3>{barber.name}</h3>
+                  <a className="btn btn-primary" href={sitePath(`/barbers/${barber.slug}/`)}>Choose {barber.name} <Icon name="arrow" size={18} /></a>
                 </div>
-                <div className="service-body">
-                  <div>
-                    <h3>{service.name}</h3>
-                    <p><Icon name="clock" size={16} /> {service.duration}</p>
-                  </div>
-                  <strong className="price">{service.price}</strong>
-                </div>
-                <button type="button" className="service-book" onClick={() => openBooking(service.name)}>
-                  Book this service <Icon name="arrow" size={17} />
-                </button>
               </article>
             ))}
           </div>
@@ -519,20 +459,15 @@ export default function HomePage() {
               <div><strong>wasafibarbershop</strong><span>Clean cuts · Sharp fades</span></div>
             </a>
             <p>Local neighborhood barbershop serving Ottawa with precision, consistency and community.</p>
+            <FooterSocial />
           </div>
-          <div><strong>Explore</strong><a href="#services">Services</a><a href="#about">About</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a></div>
-          <div><strong>Contact</strong><a href="tel:+16133188858">+1 613-318-8858</a><a href="mailto:wasafibarbershop2025@gmail.com">Email us</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">@wasafibarbershopp</a><a href={FACEBOOK_URL} target="_blank" rel="noreferrer">Facebook</a></div>
-          <div><strong>Booking</strong><button className="footer-book" type="button" onClick={() => openBooking()}>Book appointment</button><span>WhatsApp · Email · PDF</span><span>Walk-ins welcome</span></div>
+          <div><strong>Explore</strong><a href="#barbers">Our barbers</a><a href="#about">About</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a></div>
+          <div><strong>Contact</strong><a href="tel:+16133188858">+1 613-318-8858</a><a href="mailto:wasafibarbershop2025@gmail.com">Email us</a></div>
+          <div><strong>Booking</strong><button className="footer-book" type="button" onClick={() => openBooking()}>Book appointment</button><span>Choose barber · Email · Call</span><span>Walk-ins welcome</span></div>
         </div>
         <div className="container footer-bottom"><span>© {new Date().getFullYear()} Wasafi Barbershop. All rights reserved.</span><span>Ottawa, Ontario · Canada</span></div>
       </footer>
 
-      <BookingModal
-        open={bookingOpen}
-        onClose={() => setBookingOpen(false)}
-        services={SERVICES}
-        initialService={bookingService}
-      />
     </main>
   );
 }

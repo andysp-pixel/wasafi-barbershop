@@ -1,6 +1,8 @@
+import { sitePath } from "@/lib/paths";
 import "./globals.css";
 
 export const metadata = {
+  icons: { icon: sitePath("/favicon.svg") },
   title: "Wasafi Barbershop | Ottawa",
   description:
     "Wasafi Barbershop in Ottawa — clean cuts, sharp fades, line-ups, beard grooming and quality service for kids and adults. Walk-ins welcome, appointments preferred.",
