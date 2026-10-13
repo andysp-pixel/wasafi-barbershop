@@ -25,7 +25,7 @@ export default function BarberPage({ barber }) {
             <div className="booking-steps" aria-label="Booking steps"><span>1 · Barber selected</span><strong>2 · Choose your hairstyle</strong><span>3 · Date & details</span></div>
             <span className="eyebrow light">Your barber at Wasafi</span>
             <h1>{barber.name}<span>Your next fresh look.</span></h1>
-            <p>Choose a hairstyle below to see your price and request an appointment with {barber.name}.</p>
+            <p>Choose a hairstyle below to see your price and book an appointment with {barber.name}.</p>
             <div className="barber-intro-links"><a href={`tel:${barber.tel}`}>{barber.phone}</a><a href={`mailto:${barber.email}`}>{barber.email}</a></div>
             <small>{SHOP_ADDRESS}<br />Open daily · 10AM–10PM · Ottawa local time</small>
           </div>

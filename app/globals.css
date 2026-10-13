@@ -103,7 +103,7 @@ img { display: block; max-width: 100%; }
 .orb { position: absolute; border-radius: 50%; filter: blur(2px); opacity: .24; }
 .orb-one { width: 340px; height: 340px; left: -150px; top: 160px; background: var(--blue); animation: float 8s ease-in-out infinite; }
 .orb-two { width: 240px; height: 240px; left: 40%; bottom: -80px; background: var(--red); animation: float 10s ease-in-out infinite reverse; }
-.hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: 1.2fr .78fr; gap: 80px; align-items: center; }
+.hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; align-items: center; }
 .hero-copy { max-width: 720px; }
 .hero-kicker { display: inline-flex; align-items: center; gap: 10px; padding: 9px 14px; border: 1px solid rgba(255,255,255,.15); border-radius: 999px; background: rgba(255,255,255,.06); color: #d7d7d7; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .status-dot { width: 9px; height: 9px; border-radius: 50%; background: #f2ad3f; box-shadow: 0 0 0 5px rgba(242,173,63,.12); }
@@ -293,7 +293,7 @@ img { display: block; max-width: 100%; }
   .nav a:last-child { border-bottom: 0; }
   .menu-button { display: inline-grid; place-items: center; }
   .header-phone { display: none; }
-  .hero-content { grid-template-columns: 1fr .65fr; gap: 40px; }
+  .hero-content { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .hero-card-image { height: 360px; }
   .service-grid { grid-template-columns: repeat(3, 1fr); }
   .about-grid { gap: 48px; }
@@ -527,3 +527,33 @@ button:disabled { opacity: .6; cursor: wait; }
 .footer-social a:hover { color: white; border-color: #ffffff60; background: #ffffff10; }
 .footer-social svg { flex: 0 0 auto; }
 .barber-footer-social { margin-bottom: 24px; }
+
+/* Supplied barber imagery and a restrained team selection layout. */
+.hero-tools .hero-media img { object-position: 55% 48%; filter: brightness(.78) contrast(1.06); }
+.hero-tools .hero-shade { background: linear-gradient(90deg, #090909 0%, rgba(9,9,9,.98) 38%, rgba(9,9,9,.70) 64%, rgba(9,9,9,.28) 100%); }
+.policy-with-pattern { background-image: linear-gradient(115deg, rgba(12,19,30,.92) 0%, rgba(8,9,12,.72) 100%), var(--policy-image); background-size: auto, 560px auto; background-position: center; }
+.cta-tools .cta-bg img { object-position: 58% 55%; }
+.cta-tools .cta-overlay { background: linear-gradient(110deg, rgba(8,12,20,.94), rgba(8,8,9,.74)); }
+.barbers-section { background: #f6f7f9; }
+.barbers-section .section-heading { max-width: 760px; margin: 0 auto 38px; text-align: center; }
+.barbers-section .barber-grid { max-width: 960px; margin: 0 auto; gap: 24px; }
+.barbers-section .barber-card { grid-template-columns: 112px minmax(0,1fr); align-items: center; gap: 24px; min-height: 182px; padding: 28px; border: 1px solid #dbe0e7; border-radius: 10px; box-shadow: none; background: #fff; transition: border-color .2s; }
+.barbers-section .barber-card:hover { border-color: #9ba7b7; }
+.barbers-section .barber-photo { display: block; width: 112px; height: 112px; min-height: 0; border-radius: 50%; background: #e5e7eb; }
+.barbers-section .barber-photo img { object-fit: cover; object-position: 50% 42%; transform: scale(1.08); transform-origin: 50% 42%; }
+.barbers-section .barber-card.fabrice .barber-photo img { object-position: 50% 72%; transform: scale(1.85); transform-origin: 100% 55%; }
+.barbers-section .barber-card-body { padding: 0; align-items: flex-start; }
+.barbers-section .barber-card h3 { margin: 0 0 17px; color: #172131; font-size: 28px; line-height: 1.2; letter-spacing: -.025em; font-weight: 700; }
+.barbers-section .barber-card .btn { min-height: 42px; padding: 0 14px; margin: 0; gap: 8px; border: 1px solid #cfd6df; border-radius: 6px; color: #263246; background: #fff; box-shadow: none; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.barbers-section .barber-card .btn:hover { color: #fff; border-color: #172131; background: #172131; transform: none; }
+@media (max-width: 700px) {
+ .barbers-section .barber-grid { grid-template-columns: 1fr; max-width: 480px; gap: 16px; }
+ .barbers-section .barber-card { grid-template-columns: 88px minmax(0,1fr); min-height: 154px; padding: 24px; gap: 22px; }
+ .barbers-section .barber-photo { width: 88px; height: 88px; }
+}
+@media (max-width: 380px) {
+ .barbers-section .barber-card { grid-template-columns: 72px minmax(0,1fr); padding: 18px; gap: 16px; }
+ .barbers-section .barber-photo { width: 72px; height: 72px; }
+ .barbers-section .barber-card h3 { font-size: 25px; }
+ .barbers-section .barber-card .btn { padding: 0 10px; font-size: 11px; }
+}

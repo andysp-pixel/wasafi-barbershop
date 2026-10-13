@@ -185,9 +185,9 @@ export default function HomePage() {
         </div>
       </header>
 
-      <section id="top" className="hero">
+      <section id="top" className="hero hero-tools">
         <div className="hero-media" aria-hidden="true">
-          <img src={GALLERY[0].src} alt="" referrerPolicy="no-referrer" />
+          <img src={sitePath("/media/background-tools.jpg")} alt="" referrerPolicy="no-referrer" />
         </div>
         <div className="hero-shade" aria-hidden="true" />
         <div className="hero-grid" aria-hidden="true" />
@@ -232,19 +232,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          <aside className="hero-card fade-up delay-4" aria-label="Booking information">
-            <div className="hero-card-top">
-              <img src={LOGO_URL} alt="Wasafi Barbershop logo" referrerPolicy="no-referrer" />
-              <div>
-                <span>WASAFI BARBERSHOP</span>
-                <strong>Fresh looks start here.</strong>
-              </div>
-            </div>
-            <div className="hero-card-meta">
-              <div><Icon name="map" size={18} /><span>274 Montreal Rd, Vanier</span></div>
-              <div><Icon name="clock" size={18} /><span>Daily · 10:00 — 22:00</span></div>
-            </div>
-          </aside>
         </div>
       </section>
 
@@ -263,18 +250,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="barbers" className="section services-section">
+      <section id="barbers" className="section services-section barbers-section">
         <div className="container">
-          <SectionTitle eyebrow="Your barber. Your style." title="Choose your favorite barber." copy="Pick DJ Kakou or Fabrice, explore hairstyles and prices, then request your appointment." />
+          <SectionTitle eyebrow="Your barber. Your style." title="Choose your favorite barber." copy="Pick DJ Kakou or Fabrice, explore hairstyles and prices, then book your appointment." />
           <div className="barber-grid">
             {BARBERS.map((barber) => (
               <article className={`barber-card ${barber.slug}`} key={barber.slug} data-reveal>
                 <a className="barber-photo" href={sitePath(`/barbers/${barber.slug}/`)} aria-label={`Choose ${barber.name}`}>
                   <img src={barber.image} alt={barber.name} loading="lazy" />
-                  <span className="barber-photo-label">WASAFI BARBERSHOP</span>
                 </a>
                 <div className="barber-card-body">
-                  <span className="eyebrow">Meet your barber</span><h3>{barber.name}</h3>
+                  <h3>{barber.name}</h3>
                   <a className="btn btn-primary" href={sitePath(`/barbers/${barber.slug}/`)}>Choose {barber.name} <Icon name="arrow" size={18} /></a>
                 </div>
               </article>
@@ -283,7 +269,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="policy-section">
+      <section className="policy-section policy-with-pattern" style={{ "--policy-image": `url("${sitePath("/media/background-pattern.jpg")}")` }}>
         <div className="container policy-grid">
           <div data-reveal>
             <span className="eyebrow light">Booking policy</span>
@@ -436,8 +422,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="cta-section">
-        <div className="cta-bg" aria-hidden="true"><img src={GALLERY[4].src} alt="" referrerPolicy="no-referrer" /></div>
+      <section className="cta-section cta-tools">
+        <div className="cta-bg" aria-hidden="true"><img src={sitePath("/media/background-tools.jpg")} alt="" referrerPolicy="no-referrer" /></div>
         <div className="cta-overlay" aria-hidden="true" />
         <div className="container cta-content" data-reveal>
           <img className="cta-logo" src={LOGO_URL} alt="Wasafi Barbershop logo" referrerPolicy="no-referrer" />

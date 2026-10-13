@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prebuild": "node scripts/prepare-static-build.mjs",
+    "test:booking": "node tests/booking.test.mjs"
   },
   "dependencies": {
     "next": "^16.0.0",
@@ -13,6 +15,9 @@
     "react-dom": "^19.0.0"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": "22.x || 24.x"
+  },
+  "devDependencies": {
+    "wrangler": "4.149.0"
   }
 }
